@@ -16,3 +16,6 @@ mv -f /tmp/log/jenkins_access.log.bak /tmp/log/archive/jenkins_access.log.bak
 ```
 docker compose up -d
 ```
+3. checkout the database by visiting http://localhost:8080, login with `root/nv2mNzUig3fG8RUz`
+4. for `JSON` option, it writes in `shared/out.json`
+5. for `HTTP` option, need to update the `python/parse.py`, replace `https://enlq470brd9259a.m.pipedream.net` with whatever url you got from https://requestbin.com
