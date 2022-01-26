@@ -19,3 +19,9 @@ docker compose up -d
 3. checkout the database by visiting http://localhost:8080, login with `root/nv2mNzUig3fG8RUz`
 4. for `JSON` option, it writes in `shared/out.json`
 5. for `HTTP` option, need to update the `python/parse.py`, replace `https://enlq470brd9259a.m.pipedream.net` with whatever url you got from https://requestbin.com
+
+6. For some reason that the crond job did not start. Please manually start the crond for now as below
+```
+#docker exec -it nginx-local sh
+#crond -b -L /tmp/crond.log -c /etc/crontab
+```
