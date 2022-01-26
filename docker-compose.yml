@@ -34,7 +34,3 @@ services:
     restart: always
     ports:
       - 8080:8080
-  httpbin:
-    image: kennethreitz/httpbin
-    ports:
-      - 8081:80
