@@ -9,6 +9,8 @@ services:
       - ./letsencrypt:/etc/letsencrypt
       - ./conf.d:/etc/nginx/conf.d
       - ./shared:/tmp
+      - ./python:/usr/src/app
+      - ./python/crontab:/etc/crontab/root
     ports:
       - "80:80"
       - "443:443"
@@ -16,13 +18,23 @@ services:
     image: jenkins/jenkins:lts-jdk11
     ports:
       - "50000:50000"
-      - "8080:8080"
-  python:
-    container_name: python-local
-    build: 
-      context: .
-      dockerfile: dockerfile-python3
-    volumes:
-      - ./shared:/tmp
+  db:
+    image: mysql:8.0
     ports:
-      - "8000:8000"
+      - 3306:3306
+    volumes:
+      - ./sql/ddl.sql:/docker-entrypoint-initdb.d/1.sql:ro
+    environment:
+      - MYSQL_DATABASE=nginx_metrics
+      - MYSQL_USER=metrics
+      - MYSQL_PASSWORD=IQY0n2EEdvZCgiJ_
+      - MYSQL_ROOT_PASSWORD=nv2mNzUig3fG8RUz
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  httpbin:
+    image: kennethreitz/httpbin
+    ports:
+      - 8081:80
