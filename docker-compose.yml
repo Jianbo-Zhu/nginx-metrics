@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  nginx:
+    container_name: nginx-local
+    build: 
+      context: .
+      dockerfile: dockerfile-nginx-certbot
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - ./conf.d:/etc/nginx/conf.d
+      - ./shared:/tmp
+    ports:
+      - "80:80"
+      - "443:443"
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    ports:
+      - "50000:50000"
+      - "8080:8080"
+  python:
+    container_name: python-local
+    build: 
+      context: .
+      dockerfile: dockerfile-python3
+    volumes:
+      - ./shared:/tmp
+    ports:
+      - "8000:8000"

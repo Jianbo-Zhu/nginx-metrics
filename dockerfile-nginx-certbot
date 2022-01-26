@@ -1,0 +1,6 @@
+FROM ranadeeppolavarapu/nginx-http3:latest
+RUN apk add certbot certbot-nginx
+RUN mkdir /etc/letsencrypt
+RUN mkdir /etc/nginx/conf.d
+RUN mkdir /var/www
+COPY nginx.conf /etc/nginx/
