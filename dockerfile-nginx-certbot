@@ -11,3 +11,5 @@ COPY nginx.conf /etc/nginx/
 WORKDIR /usr/src/app
 COPY ./python/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+COPY python/entrypoint.sh /usr/src/app/
+ENTRYPOINT [ "/usr/src/app/entrypoint.sh" ]
