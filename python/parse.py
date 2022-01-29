@@ -22,15 +22,19 @@ def collect_metrics():
   metrics['cache_item_size'] = cache_item_size
 
   # cached items by type
-  tmp = os.popen("find /tmp/cache -type f -exec grep -F -w -a 'KEY' {} \; |cut -f3 -d:").read().split()
+  types = ['js', 'png', 'css', 'jpg', 'svg', 'others']
+  tmp = os.popen("find /tmp/cache -type f -exec grep -w -a '^KEY:' {} \; |cut -f3 -d:").read().split()
   items_bytype = dict()
+  for t in types:
+    items_bytype[t] = 0
+
   for f in tmp:
     try:
-      t = f[f.rindex('.')+1:len(f)]
+      t = f[f.rindex('.')+1:len(f)].lower()
       if t in items_bytype:
         items_bytype[t] += 1
       else:
-        items_bytype[t] = 1
+        items_bytype['others'] += 1
     except BaseException as ex:
       pass
   metrics['items_bytype'] = items_bytype
